@@ -46,7 +46,7 @@
 
 <script setup>
 import { reactive, ref } from "vue";
-import axios from "axios";
+import axios from "@/axios";
 
 const nimInput = ref("");
 const mahasiswaLoaded = ref(false);
@@ -66,7 +66,7 @@ const fetchMahasiswa = async () => {
   }
 
   try {
-    const response = await axios.get(`${nimInput.value}`);
+    const response = await axios.get(`/mahasiswa/${nimInput.value}`);
     if (response.status === 200 && response.data) {
       Object.assign(mahasiswa, response.data);
       mahasiswaLoaded.value = true;

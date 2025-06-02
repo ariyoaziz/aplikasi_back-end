@@ -77,7 +77,7 @@
 
 <script setup>
 import { reactive } from "vue";
-import axios from "axios";
+import axios from "@/axios";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -93,7 +93,7 @@ const mahasiswa = reactive({
 const submitMahasiswa = async () => {
   try {
     // Ganti URL
-    await axios.post("", mahasiswa);
+    await axios.post("/mahasiswa", mahasiswa);
     alert("Mahasiswa berhasil ditambahkan!");
     router.push("/dashboard");
   } catch (error) {

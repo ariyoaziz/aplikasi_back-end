@@ -46,7 +46,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "axios";
+import axios from "@/axios";
 import * as XLSX from "xlsx";
 
 const mahasiswaList = ref([]);
@@ -54,7 +54,7 @@ const loading = ref(true);
 
 const getMahasiswa = async () => {
   try {
-    const response = await axios.get("http://localhost:3000/mahasiswa");
+    const response = await axios.get("/mahasiswa");
     if (response.status === 200) {
       mahasiswaList.value = response.data;
     } else {

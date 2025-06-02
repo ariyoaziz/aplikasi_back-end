@@ -101,7 +101,7 @@
 
 <script setup>
 import { reactive, ref } from 'vue'
-import axios from 'axios'
+import axios from '@/axios'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -124,7 +124,7 @@ const fetchMahasiswa = async () => {
   }
 
   try {
-    const response = await axios.get(`${nimInput.value}`)
+    const response = await axios.get(`/mahasiswa/${nimInput.value}`)
     if (response.status === 200 && response.data) {
       Object.assign(mahasiswa, response.data)
       mahasiswaLoaded.value = true
@@ -139,7 +139,7 @@ const fetchMahasiswa = async () => {
 
 const submitUpdate = async () => {
   try {
-    await axios.put(`${mahasiswa.nim}`, mahasiswa)
+    await axios.put(`/mahasiswa/${mahasiswa.nim}`, mahasiswa)
     alert('Data mahasiswa berhasil diperbarui!')
     router.push('/dashboard') // atau ke halaman lain sesuai kebutuhan
   } catch (error) {

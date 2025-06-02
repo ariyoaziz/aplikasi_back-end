@@ -95,7 +95,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import axios from '@/axios'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -133,7 +133,7 @@ const handleLogout = () => {
 
 const getStatistics = async () => {
   try {
-    const response = await axios.get('https://your-api-url.com/mahasiswa/statistics')
+    const response = await axios.get('/mahasiswa/statistics')
     if (response.status === 200) {
       totalData.value = response.data.total
       activeData.value = response.data.active

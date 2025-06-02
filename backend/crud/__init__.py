@@ -10,6 +10,8 @@ from .create_mahasiswa import create_mahasiswa
 from .delete_mahasiswa import delete_mahasiswa
 from .update_mahasiswa import update_mahasiswa
 from .read_mahasiswa import get_mahasiswa
+from .get_mahasiswa_nim import get_mahasiswa_by_nim
+from .statistics_mahasiswa import get_mahasiswa_statistics
 
 __all__ = [
     "count_all_mahasiswa",
@@ -25,4 +27,6 @@ __all__ = [
     "delete_mahasiswa",
     "update_mahasiswa",
     "get_mahasiswa",
+    "get_mahasiswa_by_nim",
+    "get_mahasiswa_statistics"
 ]

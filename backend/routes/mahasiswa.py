@@ -1,11 +1,6 @@
 from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.orm import Session
 from database.config import SessionLocal
-# from crud.read_mahasiswa import get_mahasiswa
-# from crud.create_mahasiswa import create_mahasiswa
-# from crud.update_mahasiswa import update_mahasiswa
-# from crud.delete_mahasiswa import delete_mahasiswa
-# from crud.count_mahasiswa import count_all_mahasiswa
 from crud import *
 
 from schema.schema import *
@@ -44,16 +39,28 @@ def read_mahasiswa(
 def add_mahasiswa(mahasiswa: MahasiswaCreate, db: Session = Depends(get_db)):
     return create_mahasiswa(db, mahasiswa)
 
-@router.put("/mahasiswa/{nim}", response_model=MahasiswaSchema)
-def put_mahasiswa(nim: str, mahasiswa: MahasiswaCreate, db: Session = Depends(get_db)):
-    updated_mahasiswa = update_mahasiswa(db, nim, mahasiswa)
-    if not updated_mahasiswa:
+@router.get("/mahasiswa/statistics")
+def read_statistics(db: Session = Depends(get_db)):
+    return get_mahasiswa_statistics(db)
+
+@router.get("/mahasiswa/{nim}", response_model=MahasiswaSchema)
+def route_get_mahasiswa_by_nim(nim: str, db: Session = Depends(get_db)):
+    mahasiswa = get_mahasiswa_by_nim(db, nim)
+    if not mahasiswa:
         raise HTTPException(status_code=404, detail="Mahasiswa tidak ditemukan")
-    return updated_mahasiswa
+    return mahasiswa
+
+@router.put("/mahasiswa/{nim}", response_model=MahasiswaSchema)
+def put_mahasiswa(nim: str, mahasiswa_data: MahasiswaUpdate, db: Session = Depends(get_db)):
+    updated = update_mahasiswa(db, nim, mahasiswa_data)
+    if not updated:
+        raise HTTPException(status_code=404, detail="Mahasiswa tidak ditemukan")
+    return updated
 
 @router.delete("/mahasiswa/{nim}")
 def remove_mahasiswa(nim: str, db: Session = Depends(get_db)):
     return delete_mahasiswa(db, nim)
+
 
 @router.get("/mahasiswa/count")
 def get_jumlah_mahasiswa(db: Session = Depends(get_db)):
@@ -90,3 +97,4 @@ def get_top5_mahasiswa(db: Session = Depends(get_db)):
 @router.get("/mahasiswa/namakosong")
 def get_mahasiswa_namakosong(db: Session = Depends(get_db)):
     return mahasiswa_tanpa_nama(db)
+
